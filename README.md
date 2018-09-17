@@ -13,7 +13,7 @@ Open-source structured public data of SAC, in .csv/.json format, regularly auto-
 
 ## [从业人员执业注册信息公示 SAC Publicity Report](http://person.sac.net.cn/pages/registration/sac-publicity-report.html)
 1. 证券公司分析 Securities Corporations Analysis
-共121家证券公司，一般证券业务比例
+  共121家证券公司，一般证券业务比例
 1. 从业人员跳槽及流向分析
 2. 学历分析
   1. 博士生比例
