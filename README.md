@@ -10,7 +10,6 @@ Open-source structured public data of SAC, in .csv/.json format, regularly auto-
 全列表，所有公司信息合并
 
 
-
 ## [从业人员执业注册信息公示 SAC Publicity Report](http://person.sac.net.cn/pages/registration/sac-publicity-report.html)
 1. 证券公司分析 Securities Corporations Analysis
     1. 共121家证券公司，一般证券业务比例
@@ -22,7 +21,9 @@ Open-source structured public data of SAC, in .csv/.json format, regularly auto-
 
 ## 技术栈 Tech Stack
 ### 数据开源 Data Acquisition
-Python 3.6, **Selenium/Scrapy?**
+1. Python 3.6, 
+2. **Selenium/Scrapy?**
+3. 尝试使用分布式爬虫加快速度
 
 ### 数据可视化 Data Visualization
 2. Python, d3.js/E-Charts
