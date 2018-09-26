@@ -19,7 +19,7 @@ Open-source structured public data of SAC, in .csv/.json format, regularly auto-
 3. 历年招聘情况分析：根据每月新增注册证书数量来统计
 4. 男女比例分析
 5. 证券公司人数频数分布图
-6. 近视比率：使用腾讯人脸识别API
+6. 近视比率：使用[腾讯人脸识别API](https://ai.qq.com/product/face.shtml#detect)
 7. 从业类型分类
 8. 颜值相关
     1. 高分妹发掘器：占公司的比率
