@@ -16,15 +16,11 @@ Open-source structured public data of SAC, in .csv format, regularly auto-update
 请根据`requirements.txt`文件的声明安装所有依赖。
 
 ## 技术栈 Tech Stack
-### 数据开源 Data Acquisition
-2. Selenium
-
-### 数据分析 Data Analysis
-1. pandas
-
-### 数据可视化 Data Visualization
-1. Plotly, Dashoboard
-2. d3.js/E-Charts on GitHub Pages
+| 模块 Module            | 使用的依赖 Dependencies                                  |
+|-------------------------------|-------------------------------------------------|
+| 数据开源 Open Data            | Selenium                                         |
+| 数据分析 Data Analysis        | pandas                                           |
+| 数据可视化 Data Visualization | Plotly/Dashboard, D3.JS/ECharts.JS, GitHub Pages |
 
 ## 反馈 Feedback
 欢迎提出在issues中提出你感兴趣的问题。 Feel free to send a pull request or report an issue. Also, welcome to drop your questions about SAC and we will see if new features should be integrated.  
