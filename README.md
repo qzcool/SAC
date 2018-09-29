@@ -1,4 +1,4 @@
-# 中国证券业协会相关数据分析和可视化 Data Analysis and Visualization for SAC
+# 中国证券业协会数据分析和可视化 Data Analysis and Visualization for SAC
 Data Analysis and Visualization for Securities Association of China (SAC).
 
 ## 数据获取及开源 Open Data 
