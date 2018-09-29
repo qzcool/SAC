@@ -1,5 +1,4 @@
-from utils import *
-from tqdm import *
+from modules.utils import *
 
 class Scraper():
     def __init__(self, headless):
