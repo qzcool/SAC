@@ -11,6 +11,7 @@ Open-source structured public data of SAC, in .csv/.json format, regularly auto-
 
 
 ## [从业人员执业注册信息公示 SAC Publicity Report](http://person.sac.net.cn/pages/registration/sac-publicity-report.html)
+所有数据分析都会函数化并输出为JSON文件API，以便后续可视化等应用的调用。
 
 ## 技术栈 Tech Stack
 ### 数据开源 Data Acquisition

@@ -1,21 +1,21 @@
-import numpy as np
-import pandas as pd
-from bs4 import BeautifulSoup
-from fake_useragent import UserAgent
-import requests, time, re, math, openpyxl, datetime, os, shutil, psutil, platform, pyautogui, subprocess, webbrowser, json, codecs, pyperclip
+from utils import *
 from tqdm import *
-import xlwings as xw
-from selenium import webdriver
-from IPython.display import display, HTML
-from collections import OrderedDict
 
-class Company():
-    def __init__(self):
-        self.url_company_list = 'http://person.sac.net.cn/pages/registration/sac-publicity-report.html'
+class Scraper():
+    def __init__(self, headless):
+        if headless:
+            option = webdriver.ChromeOptions()
+            option.add_argument('headless')
+            self.driver = webdriver.Chrome(chrome_options=option)
+        else:
+            self.driver = webdriver.Chrome()
 
-        option = webdriver.ChromeOptions()
-        option.add_argument('headless')
-        self.driver = webdriver.Chrome(chrome_options=option)
+
+class Company(Scraper):
+    def __init__(self, headless=True):
+        self.headless = headless
+        super().__init__(headless=self.headless)
+        self.url_company_list = 'http://exam.sac.net.cn/pages/registration/sac-publicity-report.html'
 
     # 获取所有证券公司名单
     def get_company_list(self, save_to_local=True):
@@ -34,7 +34,7 @@ class Company():
         # 得到表格数据
         data, data_aoiId = [], []
 
-        #TODO 考虑是否要定义母类
+        #TODO 考虑是否要定义母类来爬取HTML上的表格
         for row in table.find_all('tbody')[1].find_all('tr'):
             cols = row.find_all('td')
             data_aoiId.append(cols[1].find('a')['onclick'].split('(')[1].split(')')[0])  # 得到机构ID
@@ -56,17 +56,17 @@ class Company():
 
         return df_companies
 
-# TODO: 是否要设置People和Company类别的继承关系：考虑可能采用分布式加快速度
 class People(Company):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, headless=True):
+        self.headless = headless
+        super().__init__(headless=self.headless)
         # self.url_people_list = 'http://person.sac.net.cn/pages/registration/sac-publicity-finish.html?aoiId='
 
     # 获取单个公司的所有员工名单
-    def get_people_list(self, company_ID, display=True):
+    # TODO: 将company_ID换成公司名称的模糊匹配
+    def get_people_list(self, company_ID, display_option=True, sleep_time=1):
         # 启动浏览器
-        # TODO：添加Headless选项
-        self.driver.get('http://person.sac.net.cn/pages/registration/sac-publicity-finish.html?aoiId=' + company_ID)
+        self.driver.get('http://exam.sac.net.cn/pages/registration/sac-publicity-finish.html?aoiId=' + company_ID)
         time.sleep(2)  # Driver加载完如果直接取数最好设置延迟
 
         # 确认页数
@@ -82,7 +82,7 @@ class People(Company):
         # 翻页
         def change_page(driver):
             driver.find_element_by_id('next_t').click()
-            time.sleep(2)  # 防止运行过快被封
+            time.sleep(sleep_time)  # 防止运行过快被封
 
         # 爬取单页
         def parser(driver, data):
@@ -117,14 +117,14 @@ class People(Company):
         df_people = pd.DataFrame(data, columns=list_columns)
 
         # 描述表格数据
-        print('{}：表格共有{}列，{}行。'.format(df_people.iloc[0,6], len(df_people.columns), len(df_people)))
-        if display:
+        print('{}：表格共有{}列，{}行。'.format(df_people.iloc[0,5], len(df_people.columns), len(df_people)))
+        if display_option:
             display(df_people)
         return df_people
 
     # 获取单个员工的照片路径：person_ID即为PPP_ID
     def get_person_info_img(self, person_ID):
-        self.driver.get('http://person.sac.net.cn/pages/registration/sac-finish-person.html?r2SS_IFjjk=' + person_ID)  # '76B6EA9E1C873C0DE053D651A8C06CD1')
+        self.driver.get('http://exam.sac.net.cn/pages/registration/sac-finish-person.html?r2SS_IFjjk=' + person_ID)  # '76B6EA9E1C873C0DE053D651A8C06CD1')
         return self.driver.find_elements_by_tag_name('img')[-1].get_attribute("src")
 
     # 获取单个员工的所有个人信息
@@ -138,15 +138,15 @@ class People(Company):
 
     # 批量获取所有公司的所有人的信息
     # TODO：需要使用分布式爬虫来提高速度
-    def get_people_list_full(self, save_to_local=True):
+    def get_people_list_full(self, save_to_local=True, sleep_time=2):
         # 获取所有公司列表
-        df_companies = self.get_company_list()
+        df_companies = self.get_company_list(save_to_local=False)
 
         # 传入所有公司的机构ID，循环爬取
         df_people_full = pd.DataFrame()
 
         for i in tqdm(df_companies.机构ID):
-            df_people = People().get_people_list(company_ID=i, display=False)
+            df_people = People(headless=self.headless).get_people_list(company_ID=i, display_option=False,sleep_time=sleep_time)
             df_people_full = df_people_full.append(df_people)
 
         # 描述表格数据
