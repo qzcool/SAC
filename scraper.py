@@ -63,7 +63,7 @@ class People(Company):
         # self.url_people_list = 'http://person.sac.net.cn/pages/registration/sac-publicity-finish.html?aoiId='
 
     # 获取单个公司的所有员工名单
-    def get_people_list(self, company_ID):
+    def get_people_list(self, company_ID, display=True):
         # 启动浏览器
         # TODO：添加Headless选项
         self.driver.get('http://person.sac.net.cn/pages/registration/sac-publicity-finish.html?aoiId=' + company_ID)
@@ -117,8 +117,9 @@ class People(Company):
         df_people = pd.DataFrame(data, columns=list_columns)
 
         # 描述表格数据
-        print('表格共有{}列，{}行。'.format(len(df_people.columns), len(df_people)))
-        display(df_people)
+        print('{}：表格共有{}列，{}行。'.format(df_people.iloc[0,6], len(df_people.columns), len(df_people)))
+        if display:
+            display(df_people)
         return df_people
 
     # 获取单个员工的照片路径：person_ID即为PPP_ID
@@ -145,7 +146,7 @@ class People(Company):
         df_people_full = pd.DataFrame()
 
         for i in tqdm(df_companies.机构ID):
-            df_people = People().get_people_list(company_ID=i)
+            df_people = People().get_people_list(company_ID=i, display=False)
             df_people_full = df_people_full.append(df_people)
 
         # 描述表格数据

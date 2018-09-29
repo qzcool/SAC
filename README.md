@@ -2,7 +2,7 @@
 Data Analysis Bundles for Securities Association of China (SAC).
 
 ## 数据获取及开源 Data Acquisition and Open-source
-提供经过整理的证券业协会公开数据，格式为CSV/JSON，定期自动更新。
+提供**经过整理的证券业协会公开数据和其他开源渠道数据**，格式为CSV/JSON，定期自动更新。
 Open-source structured public data of SAC, in .csv/.json format, regularly auto-updated.
 1. 证券公司
 全列表
