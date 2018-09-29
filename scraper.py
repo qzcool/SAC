@@ -18,7 +18,7 @@ class Company(Scraper):
         self.url_company_list = 'http://exam.sac.net.cn/pages/registration/sac-publicity-report.html'
 
     # 获取所有证券公司名单
-    def get_company_list(self, save_to_local=True):
+    def get_company_list(self, save_to_local=True, driver_quit=True):
         self.driver.get(self.url_company_list)
         time.sleep(8)  # 确保网页完全加载
         content = self.driver.page_source.encode('utf-8')
@@ -47,7 +47,8 @@ class Company(Scraper):
 
         # 描述表格数据
         print('表格共有{}列，{}行。'.format(len(df_companies.columns), len(df_companies)))
-        self.driver.quit()
+        if driver_quit:
+            self.driver.quit()
         display(df_companies)
 
         # 本地保存人员列表
@@ -55,6 +56,7 @@ class Company(Scraper):
             df_companies.to_csv('列表_证券公司.csv', encoding='gb18030')
 
         return df_companies
+
 
 class People(Company):
     def __init__(self, headless=True):
@@ -64,7 +66,7 @@ class People(Company):
 
     # 获取单个公司的所有员工名单
     # TODO: 将company_ID换成公司名称的模糊匹配
-    def get_people_list(self, company_ID, display_option=True, sleep_time=1):
+    def get_people_list(self, company_ID, display_option=True, sleep_time=1, driver_quit=True):
         # 启动浏览器
         self.driver.get('http://exam.sac.net.cn/pages/registration/sac-publicity-finish.html?aoiId=' + company_ID)
         time.sleep(2)  # Driver加载完如果直接取数最好设置延迟
@@ -112,8 +114,8 @@ class People(Company):
         for i in tqdm(range(pages_num - 1)):  ## 最后一页不用点，可以换成while循环更优雅
             change_page(self.driver)
             data, list_columns = parser(self.driver, data)
-
-        self.driver.quit()
+        if driver_quit:
+            self.driver.quit()
         df_people = pd.DataFrame(data, columns=list_columns)
 
         # 描述表格数据
@@ -124,7 +126,7 @@ class People(Company):
 
     # 获取单个员工的照片路径：person_ID即为PPP_ID
     def get_person_info_img(self, person_ID):
-        self.driver.get('http://exam.sac.net.cn/pages/registration/sac-finish-person.html?r2SS_IFjjk=' + person_ID)  # '76B6EA9E1C873C0DE053D651A8C06CD1')
+        self.driver.get('http://exam.sac.net.cn/pages/registration/sac-finish-person.html?r2SS_IFjjk=' + person_ID) # '76B6EA9E1C873C0DE053D651A8C06CD1')
         return self.driver.find_elements_by_tag_name('img')[-1].get_attribute("src")
 
     # 获取单个员工的所有个人信息
@@ -140,13 +142,15 @@ class People(Company):
     # TODO：需要使用分布式爬虫来提高速度
     def get_people_list_full(self, save_to_local=True, sleep_time=2):
         # 获取所有公司列表
-        df_companies = self.get_company_list(save_to_local=False)
+        df_companies = self.get_company_list(save_to_local=False, driver_quit=True)
 
         # 传入所有公司的机构ID，循环爬取
         df_people_full = pd.DataFrame()
 
+        # TODO:TQDM无法显示？
         for i in tqdm(df_companies.机构ID):
-            df_people = People(headless=self.headless).get_people_list(company_ID=i, display_option=False,sleep_time=sleep_time)
+            # TODO:如何让driver无缝跳转，而不用每次都重启开启
+            df_people = People(headless=self.headless).get_people_list(company_ID=i, display_option=False,sleep_time=sleep_time,driver_quit=True)
             df_people_full = df_people_full.append(df_people)
 
         # 描述表格数据
