@@ -3,7 +3,7 @@
 ## 数据获取及开源 Open Data 
 提供**经过整理的证券业协会公开数据和其他开源渠道数据**，格式为CSV，定期自动更新。
 Open-source structured public data of SAC, in .csv format, regularly auto-updated.
-1. 证券公司：全列表,大约8KB。
+1. 证券公司：全列表，大约8KB。
 2. 从业人员：全列表，所有公司信息合并显示，大约30MB。
 
 ## [从业人员执业注册信息公示 SAC Publicity Report](http://exam.sac.net.cn/pages/registration/sac-publicity-report.html)
