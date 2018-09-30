@@ -10,7 +10,7 @@ Open-source structured public data of SAC, in .csv format, regularly auto-update
 所有数据分析都会函数化并输出为JSON文件API，以便后续可视化等应用的调用。
 
 ## 安装和使用
-请根据`requirements.txt`文件的声明安装所有依赖。`start.ipynb`文件包含所有函数的调用方法实例。
+请根据`requirements.txt`文件的声明安装所有依赖。`start.ipynb`文件包含所有函数的调用方法实例。若要直接使用数据，请下载`.csv`格式的数据文件。
 
 ## 技术栈 Tech Stack
 | 模块 Module            | 使用的依赖 Dependencies                                  |
