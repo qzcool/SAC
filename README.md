@@ -6,7 +6,7 @@ Open-source structured public data of SAC, in .csv format, regularly auto-update
 1. 证券公司：全列表,大约8KB。
 2. 从业人员：全列表，所有公司信息合并显示，大约30MB。
 
-## [从业人员执业注册信息公示 SAC Publicity Report](http://person.sac.net.cn/pages/registration/sac-publicity-report.html)
+## [从业人员执业注册信息公示 SAC Publicity Report](http://exam.sac.net.cn/pages/registration/sac-publicity-report.html)
 所有数据分析都会函数化并输出为JSON文件API，以便后续可视化等应用的调用。
 
 ## 安装和使用
