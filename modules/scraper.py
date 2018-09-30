@@ -65,20 +65,18 @@ class People(Company):
 
     # 获取单个公司的所有员工名单
     # TODO: 将company_ID换成公司名称的模糊匹配
-    def get_people_list(self, company_ID, display_option=True, sleep_time=1, driver_quit=True):
+    def get_people_list(self, company_id, display_option=True, sleep_time=1, driver_quit=True):
         # 启动浏览器
-        self.driver.get('http://exam.sac.net.cn/pages/registration/sac-publicity-finish.html?aoiId=' + company_ID)
+        self.driver.get('http://exam.sac.net.cn/pages/registration/sac-publicity-finish.html?aoiId=' + company_id)
         time.sleep(2)  # Driver加载完如果直接取数最好设置延迟
 
         # 确认页数
         def get_pages_num(driver):
-            pages_num = 0  # 保证即便确认页数错误，仍然可以获得第一页而不会终止程序
             try:
-                pages_num = int(float(driver.find_element_by_id('sp_1').text.strip()))
+                return int(float(driver.find_element_by_id('sp_1').text.strip())
             except Exception as e:
                 print('请修改确认页数的ID标签，错误代码为：', e)
-            finally:
-                return pages_num
+                return 1 # 保证即便确认页数错误，仍然可以获得第一页而不会终止程序
 
         # 翻页
         def change_page(driver):
@@ -110,7 +108,7 @@ class People(Company):
         # TODO：性能提升-使用deque代替list
         data = []
         data, list_columns = parser(self.driver, data)
-        for i in tqdm(range(pages_num - 1)):  ## 最后一页不用点，可以换成while循环更优雅
+        for _ in tqdm(range(pages_num - 1)):  ## TODO:最后一页不用点，可以换成while循环更优雅
             change_page(self.driver)
             data, list_columns = parser(self.driver, data)
         if driver_quit:
@@ -130,9 +128,9 @@ class People(Company):
 
     # 获取单个员工的所有个人信息
     # TODO: 需要挖掘每个人的信息，尽量使用Requests提高速度
-    def get_person_info(self, person_ID):
+    def get_person_info(self, person_id):
         # 获取单个员工的照片路径
-        #url_img = self.get_person_info_img(person_ID)
+        #url_img = self.get_person_info_img(person_id)
         # 获取注册变更记录
 
         pass
@@ -149,7 +147,7 @@ class People(Company):
         # TODO:TQDM无法显示？
         for i in tqdm(df_companies.机构ID):
             # TODO:如何让driver无缝跳转，而不用每次都重启开启
-            df_people = People(headless=self.headless).get_people_list(company_ID=i, display_option=False,sleep_time=sleep_time,driver_quit=True)
+            df_people = People(headless=self.headless).get_people_list(company_id=i, display_option=False, sleep_time=sleep_time, driver_quit=True)
             df_people_full = df_people_full.append(df_people)
 
         # 描述表格数据
