@@ -1,5 +1,7 @@
 # 中国证券业协会数据分析和可视化 Data Analysis and Visualization for Securities Association of China (SAC)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/fca6cf377226493c9d9d9dee7c84e8a2)](https://app.codacy.com/app/qiao.zhang.qz/SAC?utm_source=github.com&utm_medium=referral&utm_content=qzcool/SAC&utm_campaign=Badge_Grade_Dashboard)
+
 ## 数据获取及开源 Open Data 
 提供**经过整理的证券业协会公开数据和其他开源渠道数据**，格式为CSV，定期自动更新。
 Open-source structured public data of SAC, in .csv format, regularly auto-updated.
