@@ -6,7 +6,8 @@ from modules.utils import *
 # 超类
 class Analytics():
     def __init__(self):
-        self.df_people_full = pd.read_csv('列表_从业人员.csv', encoding='gb18030')
+        self.df_people_full = pd.read_csv('列表_从业人员.csv', encoding='gb18030', engine='python')
+        # 参考: https://stackoverflow.com/questions/50552404/oserror-initializing-from-file-failed-on-csv-in-pandas
 
 
 # 基础分析类：https://github.com/qzcool/SAC/milestone/1
