@@ -1,4 +1,15 @@
-from modules.utils import *
+# from modules.utils import *
+# from modules.utils import *
+import numpy as np
+import pandas as pd
+from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
+import requests, time, re, math, openpyxl, datetime, os, shutil, psutil, platform, pyautogui, subprocess, webbrowser, json, codecs, pyperclip
+from tqdm import *
+import xlwings as xw
+from selenium import webdriver
+from IPython.display import display, HTML
+from collections import OrderedDict
 
 class Scraper():
     def __init__(self, headless):
